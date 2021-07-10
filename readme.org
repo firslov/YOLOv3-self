@@ -2,20 +2,38 @@
 ** 简介
    YoloV3的pytorch复现
    1. Dataset: [[https://aistudio.baidu.com/aistudio/datasetdetail/20495][十分类交通标志物数据集]]
-   2。Backbone: darknet53
+   2. Backbone: darknet53
    3. Loss function:
       - BCE: x、y、confidence、class
       - MSE: w、h
    4. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
+
+      
 ** 效果展示
-   1. Detection:
-      [[./fig/1.jpg][fig1]]
-      [[./fig/2.jpg][fig2]]
-   2. Train:
-      [[./fig/loss_total.png][total loss]]
-      [[./fig/loss_x.png][x loss]]
-      [[./fig/loss_y.png][y loss]]
-      [[./fig/loss_w.png][w loss]]
-      [[./fig/loss_h.png][h loss]]
-      [[./fig/loss_conf.png][confidence loss]]
-      [[./fig/loss_cls.png][class loss]]
+*** Detection:
+    [[file:../../firslov/src/readme/2021-07-10_23-24-28_1.jpg]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-24-55_2.jpg]]
+
+
+*** Train:
+    [[file:../../firslov/src/readme/2021-07-10_23-25-27_loss_total.png]]
+
+      
+    [[file:../../firslov/src/readme/2021-07-10_23-25-41_loss_x.png]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-25-43_loss_y.png]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-25-46_loss_w.png]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-25-49_loss_h.png]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-25-52_loss_conf.png]]
+
+
+    [[file:../../firslov/src/readme/2021-07-10_23-25-54_loss_cls.png]]
