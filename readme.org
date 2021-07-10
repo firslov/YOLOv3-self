@@ -1,6 +1,6 @@
 * YoloV3_self
 ** 简介
-   YoloV3的pytorch复现
+   YoloV3的pytorch复现。
    1. Dataset: [[https://aistudio.baidu.com/aistudio/datasetdetail/20495][十分类交通标志物数据集]]
    2. Backbone: darknet53
    3. Loss function:
@@ -11,29 +11,31 @@
       
 ** 效果展示
 *** Detection:
-    [[file:../../firslov/src/readme/2021-07-10_23-24-28_1.jpg]]
+    - fig 1
+    [[file:./fig/1.jpg]]
 
-
-    [[file:../../firslov/src/readme/2021-07-10_23-24-55_2.jpg]]
+    - fig 2
+    [[file:./fig/2.jpg]]
 
 
 *** Train:
-    [[file:../../firslov/src/readme/2021-07-10_23-25-27_loss_total.png]]
+    - total loss
+    [[file:./fig/loss_total.png]]
 
-      
-    [[file:../../firslov/src/readme/2021-07-10_23-25-41_loss_x.png]]
+    - x loss
+    [[file:./fig/loss_x.png]]
 
+    - y loss
+    [[file:./fig/loss_y.png]]
 
-    [[file:../../firslov/src/readme/2021-07-10_23-25-43_loss_y.png]]
+    - w loss
+    [[file:./fig/loss_w.png]]
 
+    - h loss
+    [[file:./fig/loss_h.png]]
 
-    [[file:../../firslov/src/readme/2021-07-10_23-25-46_loss_w.png]]
+    - confidence loss
+    [[file:./fig/loss_conf.png]]
 
-
-    [[file:../../firslov/src/readme/2021-07-10_23-25-49_loss_h.png]]
-
-
-    [[file:../../firslov/src/readme/2021-07-10_23-25-52_loss_conf.png]]
-
-
-    [[file:../../firslov/src/readme/2021-07-10_23-25-54_loss_cls.png]]
+    - class loss
+    [[file:./fig/loss_cls.png]]
