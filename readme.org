@@ -1,0 +1,21 @@
+* YoloV3_self
+** 简介
+   YoloV3的pytorch复现
+   1. Dataset: [[https://aistudio.baidu.com/aistudio/datasetdetail/20495][十分类交通标志物数据集]]
+   2。Backbone: darknet53
+   3. Loss function:
+      - BCE: x、y、confidence、class
+      - MSE: w、h
+   4. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
+** 效果展示
+   1. Detection:
+      [[./fig/1.jpg][fig1]]
+      [[./fig/2.jpg][fig2]]
+   2. Train:
+      [[./fig/loss_total.png][total loss]]
+      [[./fig/loss_x.png][x loss]]
+      [[./fig/loss_y.png][y loss]]
+      [[./fig/loss_w.png][w loss]]
+      [[./fig/loss_h.png][h loss]]
+      [[./fig/loss_conf.png][confidence loss]]
+      [[./fig/loss_cls.png][class loss]]
