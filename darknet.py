@@ -1,5 +1,5 @@
 from __future__ import division
-from util import parse_cfg, get_test_input
+from yolo_util import parse_cfg, get_test_input
 import torch
 import torch.nn as nn
 import numpy as np

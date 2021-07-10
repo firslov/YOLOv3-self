@@ -10,7 +10,7 @@
 
       
 ** 效果展示
-*** Detection:
+*** Inference:
     - fig 1
     [[file:./fig/1.jpg]]
 
