@@ -22,7 +22,7 @@ def arg_parse():
     '''
     parser = argparse.ArgumentParser(description='YOLO v3 Detection Module')
     parser.add_argument("--images", dest='images', help="Image / Directory containing images to perform detection upon",
-                        default="eval/", type=str)
+                        default="eval", type=str)
     parser.add_argument("--det", dest='det', help="Image / Directory to store detections to",
                         default="output", type=str)
     parser.add_argument("--bs", dest="bs", help="Batch size", default=1)
@@ -116,6 +116,7 @@ main process
 # arg parse
 args = arg_parse()
 images = args.images
+det = args.det
 cfg = args.cfgfile
 weights = args.weightsfile
 inp_dim = args.reso
@@ -125,6 +126,14 @@ model = Darknet(cfg)
 # pthfile = r'./weight/yo.pth'
 model.load_state_dict(torch.load(weights, map_location='cpu'))
 model.eval()
+
+# evaluation directory
+if not os.path.exists(images):
+    os.makedirs(images)
+
+# output directory
+if not os.path.exists(det):
+    os.makedirs(det)
 
 # get images path list
 try:
@@ -139,10 +148,6 @@ except NotADirectoryError:
 except FileNotFoundError:
     print("No file or directory with the name {}".format(images))
     exit()
-
-# make output directory
-if not os.path.exists(args.det):
-    os.makedirs(args.det)
 
 # images list(numpy)
 loaded_ims = [cv2.imread(x) for x in imlist]

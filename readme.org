@@ -8,8 +8,11 @@
       - MSE: w、h
    4. Anchors: COCO数据集9种尺寸聚类框
    5. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
-   6. 内容还需完善，有空再说...
-** 
+   7. 内容还需完善，有空再说...
+      
+** 更新
+   1. 201-300 epoch，增加了xy loss、no object confidence loss的权重，未作具体模型效率评估，直观感受检测准确率得到显著提升。
+      
 ** 使用
    1. Install:
       #+BEGIN_SRC bash
@@ -39,11 +42,28 @@
 ** 效果展示
 *** Inference:
     - fig 1
-    [[file:./fig/1.jpg]]
+      [[file:./fig/1.jpg]]
 
     - fig 2
-    [[file:./fig/2.jpg]]
+      [[file:./fig/2.jpg]]
 
+    - fig 3
+      [[file:./fig/3.jpg]]
+
+    - fig 4
+      [[file:./fig/4.jpg]]
+
+    - fig 5
+      [[file:./fig/5.jpg]]
+
+    - fig 6
+      [[file:./fig/6.jpg]]
+
+    - fig 7
+      [[file:./fig/7.jpg]]
+
+    - fig 8
+      [[file:./fig/8.jpg]]
 
 *** Train:
     - total loss
