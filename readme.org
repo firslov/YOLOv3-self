@@ -15,22 +15,22 @@
       
 ** 使用
    1. Install:
-      #+BEGIN_SRC bash
-	git clone --depth=1 https://github.com/firslov/YoloV3-Pytorch.git
-      #+END_SRC
+   #+BEGIN_SRC bash
+   git clone --depth=1 https://github.com/firslov/YoloV3-Pytorch.git
+   #+END_SRC
    2. Config:
       - 训练集路径：./yolo_train.py ==> train_data ==> param 0
       - 分类类别：./cfg/classes.names
       - 预训练权重：./weight/yo.pth
    3. Train:
-      #+BEGIN_SRC bash
-	python yolo_train.py
-      #+END_SRC
+   #+BEGIN_SRC bash
+   python yolo_train.py
+   #+END_SRC
       断点续训：./yolo_train.py ==> RESUME=True
    4. Inference:
-      #+BEGIN_SRC bash
-	python yolo_detect.py arg1 arg2 ...
-      #+END_SRC
+   #+BEGIN_SRC bash
+   python yolo_detect.py arg1 arg2 ...
+   #+END_SRC
       Args:
       - --images 检测目录或图片路径（./eval）
       - --det outputs存放路径（./output）
