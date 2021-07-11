@@ -5,6 +5,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 from darknet import Darknet
+from yolo_util import load_classes
 from yolo_dataset import data_set
 from yolo_loss import Loss_func
 
@@ -24,7 +25,7 @@ ANCHORS = [[(116, 90), (156, 198), (373, 326)],
            [(10, 13), (16, 30), (33, 23)]]
 GRID = [13, 26, 52]
 SIZE = 416
-CLASSES = 10
+_, CLASSES = load_classes('./cfg/classes.names')
 THRESH = 0.5
 RESUME = True
 

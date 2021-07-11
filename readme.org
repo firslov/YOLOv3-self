@@ -6,9 +6,36 @@
    3. Loss function:
       - BCE: x、y、confidence、class
       - MSE: w、h
-   4. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
-
-      
+   4. Anchors: COCO数据集9种尺寸聚类框
+   5. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
+   6. 内容还需完善，有空再说...
+** 
+** 使用
+   1. Install:
+      #+BEGIN_SRC sh
+	git clone --depth=1 https://github.com/firslov/YoloV3-Pytorch.git
+      #+END_SRC
+   2. Config:
+      - 训练集路径：./yolo_train.py ==> train_data ==> param 0
+      - 分类类别：./cfg/classes.names
+      - 预训练权重：./weight/yo.pth
+   3. Train:
+      #+BEGIN_SRC sh
+	python yolo_train.py
+      #+END_SRC
+      断点续训：./yolo_train.py ==> RESUME=True
+   4. Inference:
+      #+BEGIN_SRC sh
+	python yolo_detect.py arg1 arg2 ...
+      #+END_SRC
+      Args:
+      - --images 检测目录或图片路径（./eval）
+      - --det outputs存放路径（./output）
+      - --confidence 识别置信度阈值（0.5）
+      - --nms_thresh nms阈值（0.4）
+      - --cfg 网络结构文件（weight/yo.pth）
+      - --weights 预训练权重（默认Xavier初始化）
+      - --reso 输入图片边长（416）
 ** 效果展示
 *** Inference:
     - fig 1

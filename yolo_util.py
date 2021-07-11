@@ -259,8 +259,8 @@ def load_classes(namesfile):
     Return the list with all classes
     '''
     fp = open(namesfile, "r")
-    names = fp.read().split("\n")[:-1]
-    return names
+    names = fp.read().split("\n")
+    return names, len(names)
 
 
 def letterbox_image(img, inp_dim):

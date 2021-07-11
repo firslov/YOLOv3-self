@@ -1,5 +1,5 @@
 from __future__ import division
-from yolo_util import predict_transform, prep_image, write_results
+from yolo_util import predict_transform, prep_image, write_results, load_classes
 import torch
 import cv2
 import argparse
@@ -13,8 +13,7 @@ import random
 ANCHORS = torch.tensor([[(116, 90), (156, 198), (373, 326)],
                         [(30, 61), (62, 45), (59, 119)],
                         [(10, 13), (16, 30), (33, 23)]])
-classes = ['Ban', 'BanLeft', 'BanRight', 'BanStright', 'Bee',
-           'TurnLeft', 'TurnRight', 'GoStright', 'Park', 'Stop']
+classes, _ = load_classes('./cfg/classes.names')
 
 
 def arg_parse():

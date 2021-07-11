@@ -4,15 +4,7 @@ import torch
 import cv2
 import numpy as np
 from torch.utils.data import Dataset
-from yolo_util import *
-
-ANCHORS = torch.tensor([(10, 13), (16, 30), (33, 23), (30, 61),
-                        (62, 45), (59, 119), (116, 90), (156, 198), (373, 326)])
-GRID = torch.tensor([13, 26, 52])
-SIZE = 416
-CLASSES = 10
-THRESH = 0.5
-CUDA = torch.cuda.is_available()
+from yolo_util import prep_image
 
 
 class data_set(Dataset):
