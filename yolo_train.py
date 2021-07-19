@@ -36,7 +36,6 @@ def train():
     '''
     # model initialize
     model = Darknet("cfg/yolov3.cfg")
-    # model.load_weights("weight/yolov3.weights")
     model.to(device)
     # model.to(device)
     model.train()
