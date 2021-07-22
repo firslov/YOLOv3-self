@@ -1,89 +1,89 @@
 * YoloV3_self
 ** 简介
-   YoloV3的pytorch复现。
-   1. Dataset: [[https://aistudio.baidu.com/aistudio/datasetdetail/20495][十分类交通标志物数据集]]
-   2. Backbone: darknet53
-   3. Loss function:
-      - BCE: x、y、confidence、class
-      - MSE: w、h
-   4. Anchors: COCO数据集9种尺寸聚类框
-   5. Features: gpu加速、学习率更新、断点续训、类内NMS...
-   7. 内容还需完善，有空再说...
+YoloV3的pytorch复现。
+- Dataset: [[https://aistudio.baidu.com/aistudio/datasetdetail/20495][十分类交通标志物数据集]]
+- Backbone: darknet53
+- Loss function:
+   - BCE: x、y、confidence、class
+   - MSE: w、h
+- Anchors: COCO数据集9种尺寸聚类框
+- Features: gpu加速、学习率更新、断点续训、类内NMS...
+- 内容还需完善，有空再说...
       
 ** 更新
-   1. 201-300 epoch，增加了xy loss、no object confidence loss的权重，未作具体模型效率评估，直观感受检测准确率得到显著提升。
-   2. 重建了project结构，argparse改为yaml配置方式。
+- 201-300 epoch，增加了xy loss、no object confidence loss的权重，未作具体模型效率评估，直观感受检测准确率得到显著提升。
+- 重建了project结构，argparse改为yaml配置方式。
       
 ** 使用
-   1. Install:
-      #+BEGIN_SRC bash
-        git clone --depth=1 https://github.com/firslov/YOLOv3-self.git
-      #+END_SRC
-   2. Config:
-      - 基本配置: ./cfg/cfg.yaml
-      - 分类类别: ./cfg/classes.names
-      - 预训练权重: ./weight/yo.pth
-      - 配色文件: ./cfg/pallete
-   3. Train:
-      #+BEGIN_SRC bash
-        python yolo_train.py
-      #+END_SRC
-      断点续训: cfg.yaml ==> resume=True
-   4. Inference:
-      #+BEGIN_SRC bash
-        python yolo_detect.py
-      #+END_SRC
-      configs:
-        - input_dir 检测目录或图片路径（./eval）
-        - output_dir 推断图片存放路径（./output）
-        - confidence 识别置信度阈值（0.5）
-        - nms_thresh nms阈值（0.4）
-        - weight_file 预训练权重（默认Xavier初始化）
-        - ind_dim 输入图片边长（416）
+- Install:
+#+BEGIN_SRC bash
+git clone --depth=1 https://github.com/firslov/YOLOv3-self.git
+#+END_SRC
+- Config:
+   - 基本配置: ./cfg/cfg.yaml
+   - 分类类别: ./cfg/classes.names
+   - 预训练权重: ./weight/yo.pth
+   - 配色文件: ./cfg/pallete
+- Train:
+#+BEGIN_SRC bash
+python yolo_train.py
+#+END_SRC
+断点续训: cfg.yaml ==> resume=True
+- Inference:
+#+BEGIN_SRC bash
+python yolo_detect.py
+#+END_SRC
+configs:
+   - input_dir 检测目录或图片路径（./eval)
+   - output_dir 推断图片存放路径（./output）
+   - confidence 识别置信度阈值（0.5）
+   - nms_thresh nms阈值（0.4）
+   - weight_file 预训练权重（默认Xavier初始化）
+   - ind_dim 输入图片边长（416）
 ** 效果展示
 *** Inference:
-    - fig 1
-      [[file:./fig/1.jpg]]
+- fig 1
+[[file:./fig/1.jpg]]
 
-    - fig 2
-      [[file:./fig/2.jpg]]
+- fig 2
+[[file:./fig/2.jpg]]
 
-    - fig 3
-      [[file:./fig/3.jpg]]
+- fig 3
+[[file:./fig/3.jpg]]
 
-    - fig 4
-      [[file:./fig/4.jpg]]
+- fig 4
+[[file:./fig/4.jpg]]
 
-    - fig 5
-      [[file:./fig/5.jpg]]
+- fig 5
+[[file:./fig/5.jpg]]
 
-    - fig 6
-      [[file:./fig/6.jpg]]
+- fig 6
+[[file:./fig/6.jpg]]
 
-    - fig 7
-      [[file:./fig/7.jpg]]
+- fig 7
+[[file:./fig/7.jpg]]
 
-    - fig 8
-      [[file:./fig/8.jpg]]
+- fig 8
+[[file:./fig/8.jpg]]
 
 *** Train:
-    - total loss
-    [[file:./fig/loss_total.png]]
+- total loss
+[[file:./fig/loss_total.png]]
 
-    - x loss
-    [[file:./fig/loss_x.png]]
+- x loss
+[[file:./fig/loss_x.png]]
 
-    - y loss
-    [[file:./fig/loss_y.png]]
+- y loss
+[[file:./fig/loss_y.png]]
 
-    - w loss
-    [[file:./fig/loss_w.png]]
+- w loss
+[[file:./fig/loss_w.png]]
 
-    - h loss
-    [[file:./fig/loss_h.png]]
+- h loss
+[[file:./fig/loss_h.png]]
 
-    - confidence loss
-    [[file:./fig/loss_conf.png]]
+- confidence loss
+[[file:./fig/loss_conf.png]]
 
-    - class loss
-    [[file:./fig/loss_cls.png]]
+- class loss
+[[file:./fig/loss_cls.png]]
