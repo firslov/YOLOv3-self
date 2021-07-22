@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from yolo_util import bbox_iou
+from model.yolo_util import bbox_iou
 import numpy as np
 import math
 
@@ -37,15 +37,15 @@ class Loss_func(nn.Module):
                           for a_w, a_h in self.anchors]
 
         # (bs, num_anchors, gird, grid, attrs)
-        prediction = input.to(self.device).view(bs,  self.num_anchors,
+        prediction = input.to(self.device).view(bs, self.num_anchors,
                                                 self.bbox_attrs, in_h, in_w).permute(0, 1, 3, 4, 2).contiguous()
 
         # get outputs
-        x = torch.sigmoid(prediction[..., 0])          # Center x
-        y = torch.sigmoid(prediction[..., 1])          # Center y
-        w = prediction[..., 2]                         # Width
-        h = prediction[..., 3]                         # Height
-        conf = torch.sigmoid(prediction[..., 4])       # Conf
+        x = torch.sigmoid(prediction[..., 0])  # Center x
+        y = torch.sigmoid(prediction[..., 1])  # Center y
+        w = prediction[..., 2]  # Width
+        h = prediction[..., 3]  # Height
+        conf = torch.sigmoid(prediction[..., 4])  # Conf
         pred_cls = torch.sigmoid(prediction[..., 5:])  # Cls pred.
 
         # build targets
@@ -67,9 +67,9 @@ class Loss_func(nn.Module):
 
         # total loss = losses * weight
         loss = loss_x * self.lambda_xy + loss_y * self.lambda_xy + \
-            loss_w * self.lambda_wh + loss_h * self.lambda_wh + \
-            10 * loss_conf * self.lambda_conf + 3 * loss_nconf * \
-            self.lambda_conf + 20 * loss_cls * self.lambda_cls
+               loss_w * self.lambda_wh + loss_h * self.lambda_wh + \
+               10 * loss_conf * self.lambda_conf + 3 * loss_nconf * \
+               self.lambda_conf + 20 * loss_cls * self.lambda_cls
 
         # print("loss_x:", loss_x)
         # print("loss_y:", loss_y)
@@ -79,8 +79,8 @@ class Loss_func(nn.Module):
         # print("loss_nconf:", loss_nconf)
         # print("loss_cls:", loss_cls)
 
-        return loss, loss_x.item(), loss_y.item(), loss_w.item(),\
-            loss_h.item(), loss_conf.item(), loss_cls.item()
+        return loss, loss_x.item(), loss_y.item(), loss_w.item(), \
+               loss_h.item(), loss_conf.item(), loss_cls.item()
 
     def get_target(self, target, anchors, in_w, in_h, ignore_threshold, device=torch.device('cpu')):
         '''
@@ -145,8 +145,8 @@ class Loss_func(nn.Module):
                 f = tx[0]
                 ty[b, best_n, gj, gi] = gy - gj
                 # Width and height
-                tw[b, best_n, gj, gi] = math.log(gw/anchors[best_n][0] + 1e-16)
-                th[b, best_n, gj, gi] = math.log(gh/anchors[best_n][1] + 1e-16)
+                tw[b, best_n, gj, gi] = math.log(gw / anchors[best_n][0] + 1e-16)
+                th[b, best_n, gj, gi] = math.log(gh / anchors[best_n][1] + 1e-16)
                 # object
                 tconf[b, best_n, gj, gi] = 1
                 # One-hot encoding of label

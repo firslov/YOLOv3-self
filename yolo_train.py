@@ -2,47 +2,30 @@ import torch
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import os
+import yaml
 import numpy as np
 from tqdm import tqdm
-from darknet import Darknet
-from yolo_util import load_classes
-from yolo_dataset import data_set
-from yolo_loss import Loss_func
+from model.darknet import Darknet
+from model.yolo_util import load_classes
+from model.yolo_dataset import data_set
+from model.yolo_loss import Loss_func
 
-
-if torch.cuda.is_available():
-    device = torch.device('cuda:0')
-    # cudnn.benchmark = True
-else:
-    device = torch.device('cpu')
-
-# meta params
-LR = 1e-2
-BATCH_SIZE = 10
-EPOCH = 500
-ANCHORS = [[(116, 90), (156, 198), (373, 326)],
-           [(30, 61), (62, 45), (59, 119)],
-           [(10, 13), (16, 30), (33, 23)]]
-GRID = [13, 26, 52]
-SIZE = 416
 _, CLASSES = load_classes('./cfg/classes.names')
-THRESH = 0.5
-RESUME = True
 
 
-def train():
-    '''
+def train(cfg):
+    """
     train function：GPU train, checkpoint, scheduler update
-    '''
+    """
     # model initialize
-    model = Darknet("cfg/yolov3.cfg")
-    model.to(device)
-    # model.to(device)
+    global losses
+    model = Darknet(cfg['net_structure'])
+    model.to(cfg['device'])
     model.train()
     # weight initialize
     model.weight_init()
     # optimizer
-    optimizer = optim.Adam(model.parameters(), lr=LR)
+    optimizer = optim.Adam(model.parameters(), lr=cfg['lr'])
     scheduler = optim.lr_scheduler.StepLR(optimizer, 100, 0.5)
     start_epoch = -1
     learn_data = [[] for i in range(7)]
@@ -54,20 +37,20 @@ def train():
     '''
 
     # load dataset
-    train_data = data_set("./data/VOCdevkit/train", SIZE, train=True)
-    train_loader = DataLoader(train_data, batch_size=BATCH_SIZE,
+    train_data = data_set(cfg['train_dir'], cfg['size'], train=True)
+    train_loader = DataLoader(train_data, batch_size=cfg['batch_size'],
                               shuffle=True, num_workers=0, drop_last=True)
 
     # make loss function in 3 scales
     yolo_losses = []
     for i in range(3):
-        yolo_losses.append(Loss_func(ANCHORS[i],
-                                     CLASSES, (SIZE, SIZE), device=device))
+        yolo_losses.append(Loss_func(cfg['anchors'][i],
+                                     CLASSES, (cfg['size'], cfg['size']), device=cfg['device']))
 
     # checkpoint
-    if RESUME:
+    if cfg['resume']:
         # path
-        path_checkpoint = "./ckpt/ckpt.pth"
+        path_checkpoint = cfg['ckpt_dir'] + "/ckpt.pth"
         # load checkpoint
         checkpoint = torch.load(path_checkpoint)
         # load model parameters
@@ -82,11 +65,11 @@ def train():
     # start train
     print("Start training...")
     # epochs
-    for epoch in range(start_epoch+1, EPOCH):
+    for epoch in range(start_epoch + 1, cfg['epoch']):
         # iterations
         for images, labels in tqdm(train_loader, leave=False):
-            images = images.to(device).detach()
-            labels = labels.to(device)
+            images = images.to(cfg['device']).detach()
+            labels = labels.to(cfg['device'])
             # forward
             optimizer.zero_grad()
             outputs = model(images)
@@ -120,7 +103,7 @@ def train():
 
             # sum the values of the three scales
             losses = [sum(l) for l in losses]
-            loss = losses[0]    # losses[0] total loss
+            loss = losses[0]  # losses[0] total loss
             # print losses
             for i in range(len(losses)):
                 print("X loss:", losses[1])
@@ -150,7 +133,7 @@ def train():
         if epoch != 0 and epoch % 100 == 0:
             print('epoch:', epoch)
             print('learning rate:', optimizer.state_dict()
-                  ['param_groups'][0]['lr'])
+            ['param_groups'][0]['lr'])
             checkpoint = {
                 "net": model.state_dict(),
                 "epoch": epoch,
@@ -158,15 +141,15 @@ def train():
                 'scheduler': scheduler.state_dict()
             }
             # save checkpoint
-            if not os.path.isdir("./ckpt"):
-                os.mkdir("./ckpt")
-            torch.save(checkpoint, './ckpt/ckpt.pth')
+            if not os.path.isdir(cfg['ckpt_dir']):
+                os.mkdir(cfg['ckpt_dir'])
+            torch.save(checkpoint, cfg['ckpt_dir'] + "/ckpt.pth")
 
             # save learn data
-            if not os.path.isdir("./lrd"):
-                os.mkdir("./lrd")
+            if not os.path.isdir(cfg['lrd_dir']):
+                os.mkdir(cfg['lrd_dir'])
             learn_data = np.array(learn_data)
-            np.savetxt('./lrd/{0}-{1}.csv'.format(epoch-99, epoch),
+            np.savetxt(cfg['lrd_dir'] + '/{0}-{1}.csv'.format(epoch - 99, epoch),
                        learn_data, delimiter=',')
 
             # 100 epochs
@@ -175,10 +158,17 @@ def train():
         print("Epoch {}".format(epoch))
 
     # save weight
-    if not os.path.isdir("./weight"):
-        os.mkdir("./weight")
-    torch.save(model.state_dict(), "./weight/yo.pth")
+    if not os.path.isdir(cfg['wt_dir']):
+        os.mkdir(cfg['wt_dir'])
+    torch.save(model.state_dict(), cfg['wt_dir'] + "/yo.pth")
 
 
 if __name__ == "__main__":
-    train()
+    with open('cfg/cfg.yaml', 'r') as loadfile:
+        config = yaml.load_all(loadfile, Loader=yaml.FullLoader)
+        config_all = [x for x in config]
+
+    # train mode
+    config = config_all[0]
+
+    train(config)

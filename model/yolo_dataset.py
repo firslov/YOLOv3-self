@@ -4,7 +4,7 @@ import torch
 import cv2
 import numpy as np
 from torch.utils.data import Dataset
-from yolo_util import prep_image
+from model.yolo_util import prep_image
 
 
 class data_set(Dataset):
@@ -37,11 +37,11 @@ class data_set(Dataset):
             label[i][0] = int(label[i][0])
             for j in range(1, 5):
                 label[i][j] = float(label[i][j])
-                
+
         # normalize into 0-1
         label = np.array(label)
         label = np.pad(
-            label, ((0, 8-label.shape[0]), (0, 0)), 'constant', constant_values=0)
+            label, ((0, 8 - label.shape[0]), (0, 0)), 'constant', constant_values=0)
         label = torch.tensor(label)
 
         return img, label

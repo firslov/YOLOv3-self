@@ -1,8 +1,7 @@
 from __future__ import division
-from yolo_util import parse_cfg, get_test_input
+from model.yolo_util import parse_cfg, get_test_input
 import torch
 import torch.nn as nn
-import numpy as np
 
 
 class EmptyLayer(nn.Module):
@@ -92,7 +91,7 @@ def create_modules(blocks):
 
             anchors = x["anchors"].split(",")
             anchors = [int(a) for a in anchors]
-            anchors = [(anchors[i], anchors[i+1])
+            anchors = [(anchors[i], anchors[i + 1])
                        for i in range(0, len(anchors), 2)]
             anchors = [anchors[i] for i in mask]
 
@@ -148,7 +147,7 @@ class Darknet(nn.Module):
 
             elif module_type == "shortcut":
                 from_ = int(module["from"])
-                x = outputs[i-1] + outputs[i+from_]
+                x = outputs[i - 1] + outputs[i + from_]
 
             elif module_type == "yolo":
                 '''
@@ -161,7 +160,7 @@ class Darknet(nn.Module):
                 # x is output of the model
                 # x ==> torch.float32 requires_grad=True
 
-                #x = x.data
+                # x = x.data
                 detection.append(x)
                 '''
                 x ==>

@@ -1,0 +1,54 @@
+# config yaml
+---
+###
+# train mode
+###
+net_structure: ./cfg/yolov3.cfg
+train_dir: ./data/VOCdevkit/train
+ckpt_dir: ./ckpt
+lrd_dir: ./lrd
+wt_dir: ./weight
+device: 'cuda'
+lr: !!float 1e-2
+batch_size: 10
+epoch: 500
+size: 416
+resume: True
+anchors:
+  -
+    - !!python/tuple [116, 90]
+    - !!python/tuple [156, 198]
+    - !!python/tuple [373, 326]
+  -
+    - !!python/tuple [30, 61]
+    - !!python/tuple [62, 45]
+    - !!python/tuple [59, 119]
+  -
+    - !!python/tuple [10, 13]
+    - !!python/tuple [16, 30]
+    - !!python/tuple [33, 23]
+---
+###
+# eval mode
+###
+input_dir: ./eval
+output_dir: ./ouput
+net_structure: ./cfg/yolov3.cfg
+weight_file: ./weight/yo.pth
+inp_dim: 416
+confidence: 0.6
+nms_thresh: 0.4
+num_class: 10
+anchors:
+  -
+    - !!python/tuple [116, 90]
+    - !!python/tuple [156, 198]
+    - !!python/tuple [373, 326]
+  -
+    - !!python/tuple [30, 61]
+    - !!python/tuple [62, 45]
+    - !!python/tuple [59, 119]
+  -
+    - !!python/tuple [10, 13]
+    - !!python/tuple [16, 30]
+    - !!python/tuple [33, 23]
