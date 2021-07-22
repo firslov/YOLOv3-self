@@ -17,6 +17,7 @@
 ** 使用
    1. Install:
       #+BEGIN_SRC bash
+
         git clone --depth=1 https://github.com/firslov/YOLOv3-self.git
       #+END_SRC
    2. Config:
@@ -26,11 +27,13 @@
       - 配色文件: ./cfg/pallete
    3. Train:
       #+BEGIN_SRC bash
+
         python yolo_train.py
       #+END_SRC
       断点续训: cfg.yaml ==> resume=True
    4. Inference:
       #+BEGIN_SRC bash
+      
         python yolo_detect.py
       #+END_SRC
       configs:
