@@ -7,38 +7,39 @@
       - BCE: x、y、confidence、class
       - MSE: w、h
    4. Anchors: COCO数据集9种尺寸聚类框
-   5. Features：argparse、gpu加速、学习率更新、断点续训、类内NMS...
+   5. Features: gpu加速、学习率更新、断点续训、类内NMS...
    7. 内容还需完善，有空再说...
       
 ** 更新
    1. 201-300 epoch，增加了xy loss、no object confidence loss的权重，未作具体模型效率评估，直观感受检测准确率得到显著提升。
+   2. 重建了project结构，argparse改为yaml配置方式。
       
 ** 使用
    1. Install:
       #+BEGIN_SRC bash
-      git clone --depth=1 https://github.com/firslov/YoloV3-Pytorch.git
+        git clone --depth=1 https://github.com/firslov/YOLOv3-self.git
       #+END_SRC
    2. Config:
-      - 训练集路径：./yolo_train.py ==> train_data ==> param 0
-      - 分类类别：./cfg/classes.names
-      - 预训练权重：./weight/yo.pth
+      - 基本配置: ./cfg/cfg.yaml
+      - 分类类别: ./cfg/classes.names
+      - 预训练权重: ./weight/yo.pth
+      - 配色文件: ./cfg/pallete
    3. Train:
       #+BEGIN_SRC bash
-      python yolo_train.py
+        python yolo_train.py
       #+END_SRC
-      断点续训：./yolo_train.py ==> RESUME=True
+      断点续训: cfg.yaml ==> resume=True
    4. Inference:
       #+BEGIN_SRC bash
-      python yolo_detect.py arg1 arg2 ...
+        python yolo_detect.py
       #+END_SRC
-      Args:
-      - --images 检测目录或图片路径（./eval）
-      - --det outputs存放路径（./output）
-      - --confidence 识别置信度阈值（0.5）
-      - --nms_thresh nms阈值（0.4）
-      - --cfg 网络结构文件（weight/yo.pth）
-      - --weights 预训练权重（默认Xavier初始化）
-      - --reso 输入图片边长（416）
+      configs:
+        - input_dir 检测目录或图片路径（./eval）
+        - output_dir 推断图片存放路径（./output）
+        - confidence 识别置信度阈值（0.5）
+        - nms_thresh nms阈值（0.4）
+        - weight_file 预训练权重（默认Xavier初始化）
+        - ind_dim 输入图片边长（416）
 ** 效果展示
 *** Inference:
     - fig 1
