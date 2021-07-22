@@ -4,7 +4,7 @@
 # train mode
 ###
 net_structure: ./cfg/yolov3.cfg
-train_dir: ./data/VOCdevkit/train
+train_dir: ../Dataset/trafic/train
 ckpt_dir: ./ckpt
 lrd_dir: ./lrd
 wt_dir: ./weight
@@ -32,7 +32,7 @@ anchors:
 # eval mode
 ###
 input_dir: ./eval
-output_dir: ./ouput
+output_dir: ./output
 net_structure: ./cfg/yolov3.cfg
 weight_file: ./weight/yo.pth
 inp_dim: 416

@@ -14,7 +14,7 @@ class data_set(Dataset):
         self.train = train
         img_list = []
         img_list.extend(glob.glob(os.path.join(
-            self.folder, 'JPEGImages/*.jpg')))
+            self.folder, '*.jpg')))
         self.img_list = img_list
 
     def __getitem__(self, index):
@@ -24,7 +24,7 @@ class data_set(Dataset):
         (_, img_name) = os.path.split(img_path)
         (name, _) = os.path.splitext(img_name)
 
-        label_path = os.path.join(self.folder, 'labels/{}.txt'.format(name))
+        label_path = os.path.join(self.folder, '{}.txt'.format(name))
 
         with open(label_path, 'r') as f:
             lines = f.read().split('\n')
